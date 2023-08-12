@@ -7,7 +7,7 @@
 import { BrowserWindow } from "electron";
 import { join } from "path";
 
-import { ICON_PATH, STATIC_DIR } from "../shared/paths";
+import { ICON_PATH, RENDERER_DIR } from "../shared/paths";
 import { makeLinksOpenExternally } from "./utils/makeLinksOpenExternally";
 
 export let mainWin: BrowserWindow;
@@ -26,6 +26,11 @@ export function createMainWindow() {
 
     makeLinksOpenExternally(win);
 
-    win.loadFile(join(STATIC_DIR, "views/index.html"));
+    if (IS_DEV) {
+        win.loadURL("http://localhost:5173");
+    } else {
+        win.loadFile(join(RENDERER_DIR, "index.html"));
+    }
+
     return win;
 }

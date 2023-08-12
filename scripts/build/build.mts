@@ -5,6 +5,7 @@
  */
 
 import { BuildContext, BuildOptions, context } from "esbuild";
+import { build } from "vite";
 
 const isDev = process.argv.includes("--dev");
 
@@ -15,15 +16,17 @@ const CommonOpts: BuildOptions = {
     logLevel: "info"
 };
 
+const CommonDefines = {
+    IS_DEV: JSON.stringify(isDev)
+};
+
 const NodeCommonOpts: BuildOptions = {
     ...CommonOpts,
     format: "cjs",
     platform: "node",
     external: ["electron"],
     target: ["esnext"],
-    define: {
-        IS_DEV: JSON.stringify(isDev)
-    }
+    define: CommonDefines
 };
 
 const contexts = [] as BuildContext[];
@@ -45,10 +48,14 @@ const watch = process.argv.includes("--watch");
 if (watch) {
     await Promise.all(contexts.map(ctx => ctx.watch()));
 } else {
-    await Promise.all(
-        contexts.map(async ctx => {
+    await Promise.all([
+        ...contexts.map(async ctx => {
             await ctx.rebuild();
             await ctx.dispose();
-        })
-    );
+        }),
+        build({
+            configFile: "vite.config.mts",
+            define: CommonDefines
+        }).then(() => {})
+    ]);
 }

@@ -1,5 +1,5 @@
 {
-    "name": "Vinstaller",
+    "name": "vinstaller",
     "version": "0.0.1",
     "private": true,
     "description": "",
@@ -21,8 +21,11 @@
         "testTypes": "tsc --noEmit",
         "watch": "pnpm build --watch"
     },
-    "dependencies": {},
+    "dependencies": {
+        "@fontsource-variable/inter": "^5.0.8"
+    },
     "devDependencies": {
+        "@sveltejs/vite-plugin-svelte": "^2.4.5",
         "@types/node": "^20.4.6",
         "@typescript-eslint/eslint-plugin": "^6.2.1",
         "@typescript-eslint/parser": "^6.2.1",
@@ -39,9 +42,11 @@
         "eslint-plugin-simple-import-sort": "^10.0.0",
         "eslint-plugin-unused-imports": "^3.0.0",
         "prettier": "^3.0.0",
+        "svelte": "^4.2.0",
         "tsx": "^3.12.7",
         "type-fest": "^4.1.0",
-        "typescript": "^5.1.6"
+        "typescript": "^5.1.6",
+        "vite": "^4.4.9"
     },
     "packageManager": "pnpm@8.6.11",
     "engines": {
@@ -54,6 +59,7 @@
         "files": [
             "!*",
             "dist/js",
+            "dist/renderer",
             "static",
             "package.json",
             "LICENSE"

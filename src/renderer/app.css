@@ -1,0 +1,9 @@
+@import "@fontsource-variable/inter";
+
+:root {
+    --font: "Inter", sans-serif;
+}
+
+#app {
+    font-family: var(--font);
+}
